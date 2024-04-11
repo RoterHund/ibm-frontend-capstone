@@ -6,6 +6,9 @@ import Landing_Page from './Components/Landing_Page/Landing_Page'; // Import Lan
 import Login from './Components/Login/Login'; // Import Login component
 import Sign_Up from './Components/Sign_Up/Sign_Up'; // Import Sign Up component
 import InstantConsultation from './Components/InstantConsultation/InstantConsultation'; // Import Sign Up component
+import FindDoctorSearch from './Components/FindDoctorSearch/FindDoctorSearch';
+import AppointmentForm from './Components/AppointmentForm/AppointmentForm';
+
 
 // Define the App component as the main application entry point
 function App() {
@@ -25,9 +28,11 @@ function App() {
         {/* Define routes for different pages using Routes and Route components */}
         <Routes>
           <Route path="/" element={<Landing_Page />} /> {/* Route for home page */}
+          <Route path="/search/doctors" element={<FindDoctorSearch />} /> {/* Route for searching doctors */}
           <Route path="/login" element={<Login />} /> {/* Route for login page */}
           <Route path="/signup" element={<Sign_Up />} /> {/* Route for sign up page */}
           <Route path="/instant-consultation" element={<InstantConsultation />} /> {/* Route for instant consultation page */}
+          <Route path="/appointment-form" element={<AppointmentForm />} /> {/* Route for instant consultation page */}
         </Routes>
 
       </BrowserRouter>

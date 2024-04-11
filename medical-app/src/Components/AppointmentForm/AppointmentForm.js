@@ -8,7 +8,7 @@ const AppointmentForm = ({ doctorName, doctorSpeciality, onSubmit }) => {
   
     const handleFormSubmit = (e) => {
       e.preventDefault();
-      onSubmit({ name, phoneNumber });
+      onSubmit({ name, phoneNumber, appointmentDate, timeSlot });
       setName('');
       setAppointmentDate('');
       setPhoneNumber('');

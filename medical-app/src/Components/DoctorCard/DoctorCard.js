@@ -46,7 +46,9 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
             <div>Book Appointment</div>
             <div>No Booking Fee</div>
             </button> </div>
+        <AppointmentForm doctorName={name} doctorSpeciality={speciality} onSubmit={handleFormSubmit} />
         </div>
+{/* 
       <div className="doctor-card-options-container">
        <Popup
           style={{ backgroundColor: '#FFFFFF' }}
@@ -96,6 +98,7 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
           )}
         </Popup> 
       </div>
+*/}
     </div>
   );
 };
