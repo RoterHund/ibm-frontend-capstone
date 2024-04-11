@@ -7,10 +7,9 @@ import "./Navbar.css";
 
 const Navbar = () => {
     const [click, setClick] = useState(false);
-
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState("");
-    const[email,setEmail]=useState("");
+    const [email,setEmail]=useState("");
     const [showDropdown, setShowDropdown] = useState(false);
     const handleClick = () => setClick(!click);
 
@@ -35,12 +34,13 @@ const Navbar = () => {
         setEmail('');
         window.location.reload();
     }
+    
     const handleDropdown = () => {
       setShowDropdown(!showDropdown);
     }
+    
     useEffect(() => { 
       const storedemail = sessionStorage.getItem("email");
-
       if (storedemail) {
             setIsLoggedIn(true);
             setUsername(storedemail);
