@@ -1,64 +1,74 @@
 import React, { useState } from 'react';
-import './Sign_Up.css'
-import { Link, useNavigate } from 'react-router-dom';
-import { API_URL } from '../../config';
+import './Sign_Up.css' // Import styles for the component (optional)
+import { Link, useNavigate } from 'react-router-dom'; // For navigation and routing
+import { API_URL } from '../../config'; // Likely contains the base URL for API calls
 
 const Sign_Up = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [password, setPassword] = useState('');
-    const [showerr, setShowerr] = useState('');
-    const navigate = useNavigate();
 
-    const [showPhoneErr, setShowPhoneErr] = useState('');
+  // State variables to store user input and error messages
+  const [name, setName] = useState(''); // State for user name
+  const [email, setEmail] = useState(''); // State for email
+  const [phone, setPhone] = useState(''); // State for phone number
+  const [password, setPassword] = useState(''); // State for password
+  const [showerr, setShowerr] = useState(''); // State for general error message
+  const [showPhoneErr, setShowPhoneErr] = useState(''); // State for phone number specific error message
 
-    const handlePhoneBlur = (e) => {
-        const phoneNumber = e.target.value;
-        if (phoneNumber.length === 10) {
-            setShowPhoneErr('');
-        } else if (phoneNumber.length > 0 && phoneNumber.length < 10) {
-            setShowPhoneErr('Phone number must be exactly 10 characters long.');
+  // useNavigate hook for programmatic navigation
+  const navigate = useNavigate();
+
+  // Function to handle phone number blur event (triggered when user leaves the input field)
+  const handlePhoneBlur = (e) => {
+    const phoneNumber = e.target.value;
+
+    // Update phone number error message based on validation
+    if (phoneNumber.length === 10) {
+      setShowPhoneErr(''); // Clear error if phone number has 10 digits
+    } else if (phoneNumber.length > 0 && phoneNumber.length < 10) {
+      setShowPhoneErr('Phone number must be exactly 10 characters long.'); // Set error for invalid length
+    }
+  };
+
+  // Asynchronous function to handle user registration
+  const register = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+    // API call to register user
+    const response = await fetch(`${API_URL}/api/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+        phone: phone,
+      }),
+    });
+
+    const json = await response.json(); // Parse the JSON response from the API
+
+    // Handle successful registration
+    if (json.authtoken) {
+      sessionStorage.setItem("auth-token", json.authtoken);
+      sessionStorage.setItem("name", name);
+      sessionStorage.setItem("phone", phone);
+      sessionStorage.setItem("email", email);
+
+      // Redirect to home page and reload (consider alternative approaches for smoother experience)
+      navigate("/");
+      window.location.reload();
+    } else {
+      // Handle registration errors
+      if (json.errors) {
+        for (const error of json.errors) {
+          setShowerr(error.msg); // Set general error message from API response
         }
-    };
-
-    const register = async (e) => {
-        e.preventDefault();
-        // API Call
-        const response = await fetch(`${API_URL}/api/auth/register`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name: name,
-                email: email,
-                password: password,
-                phone: phone,
-
-            }),
-        });
-        
-        const json = await response.json();
-        if (json.authtoken) {
-            sessionStorage.setItem("auth-token", json.authtoken);
-            sessionStorage.setItem("name", name);
-            // phone and email
-            sessionStorage.setItem("phone", phone);
-            sessionStorage.setItem("email", email);
-            // Redirect to home page
-            navigate("/");   //on directing to home page you need to give logic to change login and signup buttons with name of the user and logout button where you have implemented Navbar functionality
-            window.location.reload();
-        } else {
-            if (json.errors) {
-                for (const error of json.errors) {
-                    setShowerr(error.msg);
-                }
-            } else {
-                setShowerr(json.error);
-            }
-        }
-    };
+      } else {
+        setShowerr(json.error); // Set general error message if no specific errors provided
+      }
+    }
+  };
 
     return (
         <div className="container" style={{marginTop:'5%'}}>
