@@ -13,15 +13,12 @@ const Sign_Up = () => {
 
     const [showPhoneErr, setShowPhoneErr] = useState('');
 
-    const handlePhoneChange = (e) => {
+    const handlePhoneBlur = (e) => {
         const phoneNumber = e.target.value;
-        if (phoneNumber.length <= 10) {
-            setPhone(phoneNumber);
-            if (phoneNumber.length === 10) {
-                setShowPhoneErr('');
-            } else {
-                setShowPhoneErr('Phone number must be exactly 10 characters long.');
-            }
+        if (phoneNumber.length === 10) {
+            setShowPhoneErr('');
+        } else if (phoneNumber.length > 0 && phoneNumber.length < 10) {
+            setShowPhoneErr('Phone number must be exactly 10 characters long.');
         }
     };
 
@@ -79,7 +76,7 @@ const Sign_Up = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="phone">Phone</label>
-                            <input value={phone} onChange={handlePhoneChange} type="tel" name="phone" id="phone" className="form-control" placeholder="Enter your phone number" aria-describedby="helpId" />
+                            <input value={phone} onChange={(e) => setPhone(e.target.value)} onBlur={handlePhoneBlur} type="tel" name="phone" id="phone" className="form-control" placeholder="Enter your phone number" aria-describedby="helpId" />
                             {showPhoneErr && <div className="err" style={{ color: 'red' }}>{showPhoneErr}</div>}
                         </div>
                         <div className="form-group">
