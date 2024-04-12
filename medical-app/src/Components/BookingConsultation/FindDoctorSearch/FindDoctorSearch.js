@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import './FindDoctorSearchIC.css';
+import './FindDoctorSearch.css';
 import { useNavigate } from 'react-router-dom';
 
 const initSpeciality = [
     'Dentist', 'Gynecologist/obstetrician', 'General Physician', 'Dermatologist', 'Ear-nose-throat (ent) Specialist', 'Homeopath', 'Ayurveda'
 ];
 
-const FindDoctorSearchIC = () => {
+const FindDoctorSearch = () => {
     const [doctorResultHidden, setDoctorResultHidden] = useState(true);
     const [searchDoctor, setSearchDoctor] = useState('');
     const [specialities, setSpecialities] = useState(initSpeciality);
@@ -15,7 +15,7 @@ const FindDoctorSearchIC = () => {
     const handleDoctorSelect = (speciality) => {
         setSearchDoctor(speciality);
         setDoctorResultHidden(true);
-        navigate(`/instant-consultation?speciality=${speciality}`);
+        navigate(`/booking-consultation?speciality=${speciality}`);
         window.location.reload();
     };
 
@@ -61,4 +61,4 @@ const FindDoctorSearchIC = () => {
     );
 };
 
-export default FindDoctorSearchIC;
+export default FindDoctorSearch;

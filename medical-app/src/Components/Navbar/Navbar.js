@@ -51,6 +51,16 @@ const Navbar = () => {
     }
   }, []); // Empty dependency array ensures this runs only once on component mount
 
+  useEffect(() => {
+    // Check if the user is already logged in
+    const storedUsername = sessionStorage.getItem("name");
+
+    if (storedUsername) {
+        setIsLoggedIn(true);
+        setUsername(storedUsername);
+    }
+}, []);
+
   // Return the JSX for the Navbar component
   return (
     <nav>
@@ -73,7 +83,7 @@ const Navbar = () => {
           <Link to="/">Home</Link>
         </li>
         <li className="link">
-          <Link to="/search/doctors">Appointments</Link>
+          <Link to="/booking-consultation">Appointments</Link>
         </li>
         <li className="link">
           <Link to="/instant-consultation">Instant Consultation</Link>
