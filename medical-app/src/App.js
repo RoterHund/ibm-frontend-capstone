@@ -9,6 +9,7 @@ import InstantConsultation from './Components/InstantConsultation/InstantConsult
 import Sign_Up from './Components/Sign_Up/Sign_Up'; // Import Sign Up component
 import Login from './Components/Login/Login'; // Import Login component
 import Notification from './Components/Notification/Notification';
+import ReviewForm from './Components/ReviewForm/ReviewForm';
 
 
 // Define the App component as the main application entry point
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/instant-consultation" element={<InstantConsultation />} /> {/* Route for instant consultation page */}
                 <Route path="/login" element={<Login />} /> {/* Route for login page */}
                 <Route path="/signup" element={<Sign_Up />} /> {/* Route for sign up page */}
+                <Route path="/reviews" element={<ReviewForm />} /> {/* Route for sign up page */}
             </Routes>
         </Notification>
       </BrowserRouter>
