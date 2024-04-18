@@ -10,7 +10,8 @@ import Sign_Up from './Components/Sign_Up/Sign_Up'; // Import Sign Up component
 import Login from './Components/Login/Login'; // Import Login component
 import Notification from './Components/Notification/Notification';
 import Reviews from './Components/Reviews/Reviews';
-
+import ProfileForm from './Components/ProfileCard/ProfileCard';
+import ReportsLayout from './Components/ReportsLayout/ReportsLayout';
 
 // Define the App component as the main application entry point
 function App() {
@@ -35,6 +36,8 @@ function App() {
                 <Route path="/login" element={<Login />} /> {/* Route for login page */}
                 <Route path="/signup" element={<Sign_Up />} /> {/* Route for sign up page */}
                 <Route path="/reviews" element={<Reviews />} /> {/* Route for sign up page */}
+                <Route path='/profile' element={<ProfileForm />} />
+                <Route path='/reports' element={<ReportsLayout />} /> 
             </Routes>
         </Notification>
       </BrowserRouter>

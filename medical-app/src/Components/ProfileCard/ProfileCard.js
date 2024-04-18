@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { API_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
+import "./ProfileCard.css";
 
 const ProfileForm = () => {
-  const [userDetails, setUserDetails] = useState({});
- const [updatedDetails, setUpdatedDetails] = useState({});
- const [editMode, setEditMode] = useState(false);
-  const navigate = useNavigate();
+    const [userDetails, setUserDetails] = useState({});
+    const [updatedDetails, setUpdatedDetails] = useState({});
+    const [editMode, setEditMode] = useState(false);
+    const navigate = useNavigate();
   useEffect(() => {
     const authtoken = sessionStorage.getItem("auth-token");
     if (!authtoken) {
@@ -111,13 +112,31 @@ return (
     disabled // Disable the email field
   />
 </label>
-//create above logic for name and phone from userDetails
+<label>
+         Name
+         <input
+           type="text"
+           name="name"
+           value={updatedDetails.name}
+           onChange={handleInputChange}
+         />
+       </label>
+       <label>
+         Phone
+         <input
+           type="text"
+           name="phone"
+           value={updatedDetails.phone}
+           onChange={handleInputChange}
+         />
+       </label>
 <button type="submit">Save</button>
 </form>
 ) : (
 <div className="profile-details">
 <h1>Welcome, {userDetails.name}</h1>
-// implement code to display detail of phone and email like above
+<p> <b>Email:</b> {userDetails.email}</p>
+<p><b>Phone:</b> {userDetails.phone}</p>
 <button onClick={handleEdit}>Edit</button>
 </div>
 )}
