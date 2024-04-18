@@ -17,6 +17,7 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
             if (storedAppointments) {
             setAppointments(storedAppointments);
             }
+        console.log("doctor Card Appts: ", appointments)
         }, [name]);
 
 

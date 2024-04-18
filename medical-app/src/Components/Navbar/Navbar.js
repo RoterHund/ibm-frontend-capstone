@@ -47,7 +47,9 @@ const Navbar = () => {
     const storedEmail = sessionStorage.getItem("email");
     if (storedEmail) {
       setIsLoggedIn(true);
+      console.log("Navbar isLoggedIn: ", isLoggedIn)
       setUsername(storedEmail);
+      console.log("Navbar UserName: ", username)
     }
   }, []); // Empty dependency array ensures this runs only once on component mount
 
@@ -59,6 +61,7 @@ const Navbar = () => {
         setIsLoggedIn(true);
         setUsername(storedUsername);
     }
+    console.log("Navbar UserName2: ", username)
 }, []);
 
   // Return the JSX for the Navbar component

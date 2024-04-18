@@ -54,7 +54,7 @@ const Sign_Up = () => {
       sessionStorage.setItem("name", name);
       sessionStorage.setItem("phone", phone);
       sessionStorage.setItem("email", email);
-
+    
       // Redirect to home page and reload (consider alternative approaches for smoother experience)
       navigate("/");
       window.location.reload();
