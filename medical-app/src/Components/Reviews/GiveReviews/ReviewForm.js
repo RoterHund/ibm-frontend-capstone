@@ -32,7 +32,27 @@ function GiveReviews({ doctor, onSubmit })  {
       setShowWarning(true);
     }
   };
+
+  const handleRatingChange = (rating) => {
+    setFormData({
+        ...formData,
+        rating: rating
+    });
+};
   
+  const renderStar = (rating) => {
+    const starClasses = `star ${formData.rating >= rating ? 'filled' : ''} ${formData.rating === rating ? 'clicked' : ''}`;
+
+    return (
+        <span
+            key={rating}
+            className={starClasses}
+            onClick={() => handleRatingChange(rating)}
+        >
+            ⭐️
+        </span>
+    );
+};
 
   return (
     <div>
@@ -40,10 +60,6 @@ function GiveReviews({ doctor, onSubmit })  {
         <form onSubmit={handleFormSubmit}>
           <h2>Give Your Feedback</h2>
           {showWarning && <p className="warning">Please fill out all fields.</p>}
-          <div>
-            <label htmlFor="doctor">Doctor:</label>
-            <input type="text" id="doctor" name="doctor" value={doctor.name} onChange={handleChange}/>
-          </div>
           <div>
             <label htmlFor="name">Name:</label>
             <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} />
@@ -54,7 +70,10 @@ function GiveReviews({ doctor, onSubmit })  {
           </div>
           <div>
             <label htmlFor="rating">Rating:</label>
-            <textarea id="rating" name="rating" value={formData.rating} onChange={handleChange} />
+                <div className="star-rating">
+                {[1, 2, 3, 4, 5].map((rating) => renderStar(rating))}
+                <br />
+                </div>
           </div>
           <button type="submit">Submit</button>
         </form>

@@ -12,26 +12,44 @@ const Reviews = () => {
     { name: 'Doe', age: 40 }
   ];
 
+  const [doctors, setDoctors] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
-
   const [reviews, setReviews] = useState([]);
-      // Check if appointment data exists in localStorage
-      useEffect(() => {
-        const storedReviews = {};
-        data.forEach(doctor => {
-          const storedReview = JSON.parse(localStorage.getItem(`ratingsData_${doctor.name}`));
-          if (storedReview) {
-            storedReviews[doctor.name] = storedReview;
-          }
-        });
-        setReviews(storedReviews);
-      }, []); // Empty dependency array to run the effect only once on component mount
-    
-      console.log("stored reviews: ", reviews);
+
+  useEffect(() => {
+    const getDoctorsDetails = () => {
+      fetch('https://api.npoint.io/9a5543d36f1460da2f63')
+        .then(res => res.json())
+        .then(data => {
+          const dataWithId = data.map((item, index) => ({ ...item, id: index + 1 }));
+          setDoctors(dataWithId);
+        })
+        .catch(err => console.log(err));
+    };
+  
+    // Call the function to fetch doctors' details
+    getDoctorsDetails();
+  }, []); 
+  console.log("doctors: ", doctors);
+  
+  // Check if appointment data exists in localStorage
+  useEffect(() => {
+    const storedReviews = {};
+    doctors.forEach(doctor => {
+      const storedReview = JSON.parse(localStorage.getItem(`ratingsData_${doctor.id}`));
+      console.log("useEffect");
+      if (storedReview) {
+        storedReviews[doctor.id] = storedReview;
+      }
+    });
+    setReviews(storedReviews);
+  },[doctors]); // Empty dependency array to run the effect only once on component mount
+    console.log("stored reviews: ", reviews);
+
 
   const handleFormSubmit = (formData) => {
-    localStorage.setItem(`ratingsData_${selectedDoctor.name}`, JSON.stringify(formData));
+    localStorage.setItem(`ratingsData_${selectedDoctor.id}`, JSON.stringify(formData));
     setShowModal(false);
     window.location.reload();
   };
@@ -42,27 +60,38 @@ const Reviews = () => {
   };
 
   return (
-    <div className="reviews">
-      <table>
+    <div className="reviews-container">
+      <table className="report-table">
         <thead>
           <tr>
             <th>Serial Number</th>
             <th>Doctor Name</th>
-            <th>Doctor Age</th>
+            <th>Doctor Speciality</th>
             <th>Provide Feedback</th>
-            <th>Review</th>
+            <th>Review Given</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((doctor, index) => (
+          {doctors.map((doctor, index) => (
             <tr key={index}>
-              <td>{index + 1}</td>
+              <td>{doctor.id}</td>
               <td>{doctor.name}</td>
-              <td>{doctor.age}</td>
-              <td>
-                <button onClick={() => handleFeedbackClick(doctor)}>Click Here</button>
-              </td>
-              <td>storedReviews[doctor.name].review</td>
+              <td>{doctor.speciality}</td>
+              {!reviews[doctor.id] ? (
+                <>
+                  <td>
+                    <button onClick={() => handleFeedbackClick(doctor)}>Click Here</button>
+                  </td>
+                  <td></td>
+                </>
+              ) : (
+                <>
+                  <td>
+                    <button className="disabled-button" disabled>Click Here</button>
+                  </td>
+                  <td>{reviews[doctor.id].review}</td>
+                </>
+              )}
             </tr>
           ))}
         </tbody>
