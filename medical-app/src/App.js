@@ -9,7 +9,7 @@ import InstantConsultation from './Components/InstantConsultation/InstantConsult
 import Sign_Up from './Components/Sign_Up/Sign_Up'; // Import Sign Up component
 import Login from './Components/Login/Login'; // Import Login component
 import Notification from './Components/Notification/Notification';
-import Reviews from './Components/ReviewForm/Reviews';
+import Reviews from './Components/Reviews/Reviews';
 
 
 // Define the App component as the main application entry point

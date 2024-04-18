@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-function GiveReviews() {
-  const [showForm, setShowForm] = useState(false);
+function GiveReviews({ doctor, onSubmit })  {
+  //const [showForm, setShowForm] = useState(true);
   const [submittedMessage, setSubmittedMessage] = useState('');
   const [showWarning, setShowWarning] = useState(false);
   const [formData, setFormData] = useState({
@@ -10,9 +10,9 @@ function GiveReviews() {
     rating: 0 // Assuming you have a rating field in your form
   });
 
-  const handleButtonClick = () => {
-    setShowForm(true);
-  };
+ // const handleButtonClick = () => {
+ //   setShowForm(true);
+ // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,25 +22,28 @@ function GiveReviews() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
     if (formData.name && formData.review && formData.rating > 0) {
-      setSubmittedMessage(JSON.stringify(formData)); // Convert object to string
+      setSubmittedMessage(JSON.stringify(formData));
       setShowWarning(false);
+      onSubmit(formData); // Invoke onSubmit with formData directly
     } else {
       setShowWarning(true);
     }
   };
+  
 
   return (
     <div>
       <h2>Form with Message</h2>
-      {!showForm ? (
-        <button onClick={handleButtonClick}>Open Form</button>
-      ) : (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleFormSubmit}>
           <h2>Give Your Feedback</h2>
           {showWarning && <p className="warning">Please fill out all fields.</p>}
+          <div>
+            <label htmlFor="doctor">Doctor:</label>
+            <input type="text" id="doctor" name="doctor" value={doctor.name} onChange={handleChange}/>
+          </div>
           <div>
             <label htmlFor="name">Name:</label>
             <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} />
@@ -49,9 +52,12 @@ function GiveReviews() {
             <label htmlFor="review">Review:</label>
             <textarea id="review" name="review" value={formData.review} onChange={handleChange} />
           </div>
+          <div>
+            <label htmlFor="rating">Rating:</label>
+            <textarea id="rating" name="rating" value={formData.rating} onChange={handleChange} />
+          </div>
           <button type="submit">Submit</button>
         </form>
-      )}
       {submittedMessage && (
         <div>
           <h3>Submitted Message:</h3>
